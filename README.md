@@ -43,7 +43,7 @@ State (the `WARDROBE` dict) persists across tool calls and conversation turns.
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # then fill in your API key / base URL
+cp .env.example .env   # then fill in your OPENAI_API_KEY
 ```
 
 ## Run

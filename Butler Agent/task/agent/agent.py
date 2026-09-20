@@ -71,7 +71,10 @@ TOOL_NAME_TO_FUNC = {
     "wash_clothing": wash_clothing,
 }
 
-client = OpenAI(api_key=os.getenv("LITELLM_API_KEY"), base_url=os.getenv("LITELLM_BASE_URL"))
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY") or os.getenv("LITELLM_API_KEY"),
+    base_url=os.getenv("OPENAI_BASE_URL") or os.getenv("LITELLM_BASE_URL"),
+)
 
 SYSTEM_PROMPT = """
 You are a helpful assistant, your goal is to help user.
