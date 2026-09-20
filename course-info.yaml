@@ -1,0 +1,18 @@
+type: hyperskill
+title: Butler Agent
+language: English
+summary: "<p>AI agents can do more than just answer questions—they can actually help\
+  \ you with tasks. This project helps you build a simple but useful AI butler that\
+  \ works autonomously. Give it access to tools like checking the weather and managing\
+  \ a wardrobe, and watch it complete multi-step tasks on its own. No more single-question\
+  \ chatbots—see how AI can chain actions together to be genuinely helpful!</p>"
+programming_language: Python
+programming_language_version: 3.10
+environment: unittest
+content:
+  - Butler Agent
+additional_files:
+  - name: requirements.txt
+    visible: true
+mode: Study
+yaml_version: 5

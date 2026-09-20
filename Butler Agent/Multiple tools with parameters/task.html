@@ -1,0 +1,64 @@
+<div class="step-text">
+<h5 id="description">Description</h5><p>In this final stage, you'll create a fully functional agent that can handle multiple tools, accept parameters, manage state, and engage in continuous conversation. This represents the complete THINK-ACT-OBSERVE loop with all the essential features of an LLM agent.</p><p style="text-align: start">You'll be adding two more tools to your agent:</p><ol><li><p><code class="java">get_wardrobe_items()</code>: Lists all clothing items in the wardrobe with their status (clean/dirty);</p></li><li><p><code class="java">wash_clothing(item_name)</code>: Washes a dirty clothing item, changing its status to clean;</p></li></ol><p style="text-align: start">The key new concepts in this stage are:</p><p style="text-align: start"><strong>1. Tool parameters</strong></p><p style="text-align: start">Unlike <code class="java">check_weather()</code>, which takes no parameters, <code class="java">wash_clothing()</code> requires an <code class="java">item_name</code> parameter. The LLM must:</p><ul><li><p>Understand which item to wash based on context;</p></li><li><p>Pass the correct item name to the function;</p></li><li><p>Handle cases where the item doesn't exist.</p></li></ul><p style="text-align: start"><strong>2. State management</strong></p><p style="text-align: start">The <code class="java">WARDROBE</code> dictionary maintains state across tool calls:</p><ul><li><p>Items start as "dirty";</p></li><li><p>Calling <code class="java">wash_clothing()</code> changes them to "clean";</p></li><li><p>This state persists throughout the conversation.</p></li></ul><p style="text-align: start"><strong>3. Continuous conversation loop</strong></p><p style="text-align: start">Instead of a single interaction, the agent now supports ongoing dialogue:</p><ul><li><p>Users can ask multiple questions;</p></li><li><p>Context grows with each interaction;</p></li><li><p>Users can exit with "q", "quit", or "exit".</p></li></ul><p style="text-align: start"><strong>4. Error handling</strong></p><p style="text-align: start">Your <code class="java">wash_clothing()</code> function should handle errors gracefully:</p><ul><li><p>Check if the item exists in the wardrobe;</p></li><li><p>Return an error message if not found;</p></li><li><p>Otherwise, update the status and return success.</p></li></ul><p><strong>Example conversation flow:</strong></p><pre><code class="java">[USER]: What should I wear today?
+[ENTERING AGENT LOOP]
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall']
+[ACT]: Calling "check_weather" with arguments {}
+[OBSERVE]: Result Cold, rainy
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall']
+[ACT]: Calling "get_wardrobe_items" with arguments {}
+[OBSERVE]: Result Item blue sweater is dirty; Item brown jacket is dirty
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall']
+[ACT]: Calling "wash_clothing" with arguments {"item_name":"blue sweater"}
+[OBSERVE]: Result blue sweater is washed
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall']
+[ACT]: Calling "wash_clothing" with arguments {"item_name":"brown jacket"}
+[OBSERVE]: Result brown jacket is washed
+[THINK]: Model decided to return these items: ['ResponseOutputMessage']
+[EXITING AGENT LOOP]
+[ASSISTANT]: Since it's cold and rainy today, I washed your blue sweater and brown jacket. Now you have two clean options to stay warm and dry! You can wear either the cozy blue sweater or the stylish brown jacket.</code></pre><p>This demonstrates the agent's ability to:</p><ul><li><p>Chain multiple tool calls;</p></li><li><p>Make decisions based on tool outputs;</p></li><li><p>Modify state through actions;</p></li><li><p>Provide a final response that incorporates all the information.</p></li></ul><h5 id="objectives">Objectives</h5><p>In this stage, you should:</p><ol><li><p>Add <code class="java">get_wardrobe_items</code> and <code class="java">wash_clothing</code> tools to <code class="java">TOOLS_REGISTRY</code>.</p></li><li><p>Define the <code class="java">WARDROBE</code> dictionary with initial items (all dirty).</p></li><li><p>Implement <code class="java">get_wardrobe_items()</code> that returns a formatted string of all items.</p></li><li><p>Implement <code class="java">wash_clothing(item_name)</code> with:</p><ul><li><p>Error handling for non-existent items;</p></li><li><p>State update for valid items;</p></li><li><p>Appropriate return messages.</p></li></ul></li><li><p>Implement the continuous conversation loop in <code class="java">main()</code>:</p><ul><li><p>Initialize empty context;</p></li><li><p>Loop to accept user input;</p></li><li><p>Exit on "q", "quit", or "exit" commands;</p></li><li><p>Call <code class="java">run_agent_loop()</code> for each user message;</p></li><li><p>Display the agent's response;</p></li><li><p>Maintain context across interactions.</p></li></ul></li></ol><h5 id="examples">Examples</h5><p><strong>Example 1: </strong>Simple wardrobe query.</p><pre><code class="java">[USER]: What's in my wardrobe?
+[ENTERING AGENT LOOP]
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall']
+[ACT]: Calling "get_wardrobe_items" with arguments {}
+[OBSERVE]: Result Item blue sweater is dirty; Item brown jacket is dirty
+[THINK]: Model decided to return these items: ['ResponseOutputMessage']
+[EXITING AGENT LOOP]
+[ASSISTANT]: You have a blue sweater and a brown jacket in your wardrobe, but both are currently dirty.</code></pre><p><strong>Example 2:</strong> Complex task requiring multiple tools.</p><pre><code class="java">[USER]: What should I wear today?
+[ENTERING AGENT LOOP]
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall', 'ResponseFunctionToolCall']
+[ACT]: Calling "check_weather" with arguments {}
+[OBSERVE]: Result Cold, rainy
+[ACT]: Calling "get_wardrobe_items" with arguments {}
+[OBSERVE]: Result Item blue sweater is dirty; Item brown jacket is dirty
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall', 'ResponseFunctionToolCall']
+[ACT]: Calling "wash_clothing" with arguments {"item_name":"blue sweater"}
+[OBSERVE]: Result blue sweater is washed
+[ACT]: Calling "wash_clothing" with arguments {"item_name":"brown jacket"}
+[OBSERVE]: Result brown jacket is washed
+[THINK]: Model decided to return these items: ['ResponseOutputMessage']
+[EXITING AGENT LOOP]
+[ASSISTANT]: The weather is cold and rainy today. I’ve washed your blue sweater and brown jacket, so they are now clean. Since it's chilly, I recommend wearing the blue sweater layered with the brown jacket for warmth. Don't forget to grab an umbrella!</code></pre><p><strong>Example 3:</strong> Error handling.</p><pre><code class="java">[USER]: Wash my red shirt
+[ENTERING AGENT LOOP]
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall']
+[ACT]: Calling "wash_clothing" with arguments {"item_name":"red shirt"}
+[OBSERVE]: Result Item 'red shirt' not found in wardrobe
+[THINK]: Model decided to return these items: ['ResponseFunctionToolCall']
+[ACT]: Calling "get_wardrobe_items" with arguments {}
+[OBSERVE]: Result Item blue sweater is dirty; Item brown jacket is dirty
+[THINK]: Model decided to return these items: ['ResponseOutputMessage']
+[EXITING AGENT LOOP]
+[ASSISTANT]: It looks like your wardrobe contains a blue sweater and a brown jacket, both of which are dirty. There is no red shirt available. Would you like to wash the blue sweater or the brown jacket instead?</code></pre><h5 id="key-concepts">Key concepts</h5><ul><li><p><strong>Parameterized tools</strong>: Tools that accept arguments to perform specific actions.</p></li><li><p><strong>State persistence</strong>: Data (like WARDROBE) that changes over time and persists across tool calls.</p></li><li><p><strong>Tool chaining</strong>: The agent calling multiple tools in sequence to accomplish a task.</p></li><li><p><strong>Context accumulation</strong>: The conversation history grows with each interaction, allowing the agent to remember previous exchanges.</p></li><li><p><strong>Graceful degradation</strong>: Handling errors and edge cases (like non-existent items) appropriately.</p></li></ul><h5 id="tool-definition-with-parameters">Tool definition with parameters</h5><pre><code class="java">{
+    "type": "function",
+    "name": "wash_clothing",
+    "description": "Wash a dirty clothing item to make it clean",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "item_name": {
+                "type": "string",
+                "description": "Name of the clothing item to wash"
+            }
+        },
+        "required": ["item_name"]
+    }
+}</code></pre><h5 id="tips">Tips</h5><ul><li><p>The model can return multiple function calls in a single response – handle them all.</p></li><li><p>Use <code class="java">**json.loads(item.arguments)</code> to unpack the arguments dictionary when calling functions</p></li><li><p>Context is mutable – it grows with each message, tool call, and tool result.</p></li><li><p>The conversation loop should feel natural – the agent maintains memory of previous interactions.</p></li><li><p>Consider edge cases: What if the user asks to wash an item that's already clean? (Your current implementation will still mark it as clean, which is fine).</p></li><li><p>The system prompt tells the agent not to ask for permission – it should proactively use tools to help.</p></li><li><p>You can test the agent by asking it to perform complex multi-step tasks.</p></li></ul>
+</div>

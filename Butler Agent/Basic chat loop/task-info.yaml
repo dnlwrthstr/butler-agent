@@ -1,0 +1,17 @@
+type: edu
+files:
+  - name: agent/agent.py
+    visible: true
+    learner_created: false
+  - name: test/__init__.py
+    learner_created: false
+  - name: test/tests.py
+    learner_created: false
+  - name: tests.py
+    learner_created: false
+feedback_link: https://hyperskill.org/projects/553/stages/3171/implement#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Wed, 16 Sep 2026 19:49:02 UTC"
+record: -1

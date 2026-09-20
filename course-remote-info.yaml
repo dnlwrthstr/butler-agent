@@ -1,0 +1,31 @@
+hyperskill_project:
+  id: 553
+  ide_files: https://hyperskill.org/api/projects/553/additional-files/additional_files.json
+  is_template_based: true
+  use_ide: true
+  environment: unittest
+update_date: "Sun, 20 Sep 2026 12:34:05 UTC"
+stages:
+  - id: 3171
+    step: 53132
+    is_completed: true
+  - id: 3172
+    step: 53133
+    is_completed: true
+  - id: 3173
+    step: 53134
+    is_completed: true
+topics:
+  0:
+    - title: What is an LLM agent?
+      theory_id: 53092
+    - title: "How agents work (Thought, Act, Observe)"
+      theory_id: 53101
+    - title: Thought part of an agent loop
+      theory_id: 53106
+  1:
+    - title: Act part of an agent loop
+      theory_id: 53113
+  2:
+    - title: Observe part of an agent loop
+      theory_id: 53118
